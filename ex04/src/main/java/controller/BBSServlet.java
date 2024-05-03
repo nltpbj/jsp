@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import model.*;
 
 
-@WebServlet(value={"/bbs/list", "/bbs/insert", "/bbs/read", "/bbs/delete", "/bbs/update", "/bbs/list.json"})
+@WebServlet(value={"/bbs/total", "/bbs/list", "/bbs/insert", "/bbs/read", "/bbs/delete", "/bbs/update", "/bbs/list.json"})
 public class BBSServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BBSDAOImpl dao=new BBSDAOImpl();   
@@ -27,6 +27,12 @@ public class BBSServlet extends HttpServlet {
 		RequestDispatcher dis=request.getRequestDispatcher("/home.jsp");
 		
 		switch(request.getServletPath()) { 
+		case "/bbs/total":
+			String query1=request.getParameter("query")==null ?
+					"":request.getParameter("query");
+			
+			out.print(dao.total(query1));
+			break;
 		case "/bbs/update":
 			String bid=request.getParameter("bid");
 			BBSVO bbs=dao.read(Integer.parseInt(bid));
@@ -43,12 +49,14 @@ public class BBSServlet extends HttpServlet {
 			dis.forward(request, response);
 			break;
 		case "/bbs/list.json":
+			String query=request.getParameter("query")!=null?
+					request.getParameter("query") : "";
 			int page=request.getParameter("page")!=null ? 
 					Integer.parseInt(request.getParameter("page")) :  1;
 			int size=request.getParameter("size")!=null ? 
 					Integer.parseInt(request.getParameter("size")) : 10;
 			Gson gson=new Gson();
-			out.print(gson.toJson(dao.list(page, size)));
+			out.print(gson.toJson(dao.list(page, size, query)));
 			break;
 		case "/bbs/read":
 			bid=request.getParameter("bid");

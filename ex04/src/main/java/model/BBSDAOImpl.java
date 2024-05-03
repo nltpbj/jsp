@@ -134,5 +134,77 @@ public class BBSDAOImpl implements BBSDAO{
 		}
 		return array;
 	}
+
+	@Override
+	public int total() {
+		int total=0;
+		try {
+			String sql="select count(*) total from bbs";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) total=rs.getInt("total");
+			
+		}catch(Exception e) {
+			System.out.println("전체갯수:" +e.toString());
+		}
+		return total;
+	}
+
+	@Override
+	public ArrayList<BBSVO> list(int page, int size, String query) {
+		ArrayList<BBSVO> array=new ArrayList<BBSVO>();
+		query = "%" + query + "%";
+		try {
+			String sql="select * from view_bbs";
+			sql+=" where title like ? or contents like ? or writer like ?";
+			sql+=" order by bid desc";
+			sql+=" limit ?, ?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, query);
+			ps.setString(2, query);
+			ps.setString(3, query);
+			ps.setInt(4, (page-1)*size);
+			ps.setInt(5, size);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				BBSVO vo=new BBSVO();
+				vo.setBid(rs.getInt("bid"));
+				vo.setTitle(rs.getString("title"));
+				vo.setWriter(rs.getString("writer"));
+				vo.setBdate(sdf.format(rs.getTimestamp("bdate")));
+				vo.setUname(rs.getString("uname"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setContents(rs.getString("contents"));
+				array.add(vo);
+				System.out.println(vo.toString());
+				
+			}
+			
+			
+		}catch(Exception e) {
+			System.out.println("게시판목록:" + e.toString());
+		}
+		return array;
+	}
+
+	@Override
+	public int total(String query) {
+		int total=0;
+		query = "%" + query + "%";
+		try {
+			String sql="select count(*) total from bbs";
+			sql+=" where title like ? or contents like ? or writer like ?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, query);
+			ps.setString(2, query);
+			ps.setString(3, query);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) total=rs.getInt("total");
+			
+		}catch(Exception e) {
+			System.out.println("전체갯수:" +e.toString());
+		}
+		return total;
+	}
 	
 }

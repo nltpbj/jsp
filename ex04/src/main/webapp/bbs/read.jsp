@@ -1,24 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div>
- 	<h1>게시글정보</h1>
- 	<div class="text-end mb-2" id="div_update">
- 		<a  href="/bbs/update?bid=${bbs.bid}" class="btn btn-primary btn-sm px-3">수정</a>
- 		<button class="btn btn-danger btn-sm px-3 delete">삭제</button>
- 	</div>
+	<h1>게시글정보</h1>
+	<div class="text-end mb-2" id="div_update">
+		<a href="/bbs/update?bid=${bbs.bid}" class="btn btn-primary btn-sm px-3">수정</a>
+		<button class="btn btn-danger btn-sm px-3 delete">삭제</button>
+	</div>
  	<div class="card border-info">
- 	 <div class="card-header text-center">
- 	 	<div>${bbs.title}</div>
- 	 </div>
- 	 	<div class="card-body">
- 	 		<div>${bbs.contents}</div>
- 	 	</div>
- 	 	<div class="card-footer text-muted text-end">
- 	 		<span>${bbs.bdate}</span>
- 	 		<span>${bbs.uname}(${bbs.writer})</span>
- 	 	</div>
- 	</div>
-</div>
+	<div class="card-body">
+				<div>[${bbs.bid}] ${bbs.title}</div>
+				<hr>
+				<div>${bbs.contents}</div>
+			</div>
+			<div class="card-footer text-muted text-end" style="font-size:12px;">
+				<span>${bbs.bdate}</span>
+				<span>${bbs.uname}(${bbs.writer})</span>
+			</div>
+		</div>
+	</div>
+
+<jsp:include page="comments.jsp"/>
+
 <script>
 	const writer="${bbs.writer}";
 	if(uid==writer){

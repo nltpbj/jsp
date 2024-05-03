@@ -47,7 +47,12 @@
 					//alert(data);
 					if(data==1){
 						//alert("성공")
+						let target=sessionStorage.getItem("target");
+						if(target){
+							location.href=target;
+						}else{
 						location.href="/";
+						}
 					}else if(data==2){
 						alert("비밀번호가 일치하지 않습니다.");
 						$(frm.upass).val("");
