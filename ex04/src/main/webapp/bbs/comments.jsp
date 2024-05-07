@@ -4,6 +4,8 @@
  <style>
  	.delete {
 	 	font-size:20px;
+		cursor:pointer;
+		color:red;
  	}
  </style>
 <div class="mt-5 text-end" id="div_insert">
@@ -25,11 +27,10 @@
 <div id="pagination" class="pagination justify-content-center mt-3"></div>
 <script id="temp_comments" type="x-handlebars-template">
 	{{#each .}}
-
 		<div class="text-muted">
 			<span>{{cdate}}</span>
-			<span>{{uname}}({{writer}})</span>
-			<i class="bi bi-trash ms-3" style="{{delete writer}}" cid="{{cid}}"></i>
+			<span>{{uname}}({{writer}})</sapn>
+			<i class="bi bi-trash3 ms-3 delete" style="{{delete writer}}" cid="{{cid}}"></i>
 		</div>
 		<div class="mb-5 ellipsis2"><b>{{cid}}</b>: {{contents}}</div>
 	{{/each}}
