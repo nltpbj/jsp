@@ -44,8 +44,8 @@
 	</table>
 </script>
 <script id="temp_stu" type="x-handlebars-templage">
-	<table class="table table-bordered table-hover table-dark">
-		<tr class="table-secondary">
+	<table class="table table-bordered table-hover table-dark ">
+		<tr class="table-secondary text-center">
 			<td>학생번호</td>
 			<td>학생이름</td>
 			<td>학생학과</td>

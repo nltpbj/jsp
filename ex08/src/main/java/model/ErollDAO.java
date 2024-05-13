@@ -3,6 +3,21 @@ import java.util.*;
 import java.sql.*;
 public class ErollDAO {
 	Connection con=Database.CON;
+	//점수취소
+	public void update(String lcode, String scode, int grade) {
+		try {
+			String sql="update enrollments set grade=?";
+			sql += " where lcode=? and scode=?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setInt(1, grade);
+			ps.setString(2, lcode);
+			ps.setString(3, scode);
+			ps.execute();
+		}catch(Exception e) {
+			System.out.println("점수수정:" + e.toString());
+			
+		}
+	}
 	//수강취소
 	public boolean delete(String scode, String lcode) {
 		try {

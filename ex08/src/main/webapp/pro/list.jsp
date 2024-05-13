@@ -37,7 +37,7 @@
 </div>
 
 <script id="temp_pro" type="x-handlebars-template">
-	<table class="table table-bordered table-hover table-dark">
+	<table class="table table-bordered table-hover table-dark text-center">
 		<tr class="table-secondary">
 			<td>교수번호</td>
 			<td>교수이름</td>
@@ -47,7 +47,7 @@
 			<td>임용일자</td>
 		</tr>
 		{{#each. }}
-			<tr>
+			<tr class="text-center">
 				<td>{{pcode}}</td>
 				<td><a href="/pro/read?pcode={{pcode}}">{{pname}}</a></td>
 				<td>{{dept}}</td>

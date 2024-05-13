@@ -39,7 +39,7 @@
 	<div id="pagination" class="pagination justify-content-center mt-5"></div>
 </div>
 <script id="temp_stu" type="x-handlebars-template">
-	<table class="table table-bordered table-hover table-dark">
+	<table class="table table-bordered table-hover table-dark text-center">
 		<tr class="table-secondary">
 			<td>학생번호</td>
 			<td>학생이름</td>
@@ -49,7 +49,7 @@
 			<td>지도교수</td>
 		</tr>
 		{{#each .}}
-		<tr>
+		<tr class="text-center">
 			<td>{{scode}}</td>
 			<td><a href="/stu/read?scode={{scode}}">{{sname}}<a/></td>
 			<td>{{sdept}}</td>

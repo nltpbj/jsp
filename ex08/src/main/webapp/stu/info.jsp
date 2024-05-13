@@ -52,7 +52,7 @@
 	//삭제버튼을 클릭한경우
 	$("#div_enroll").on("click", ".delete", function(){
 		const lcode=$(this).attr("lcode");
-		if(confirm(lcode + "번 강좌를 수강신청하실래요?")){
+		if(confirm(lcode + "번 강좌를 수강취소하실래요?")){
 			$.ajax({
 				type:"post",
 				url:"/enroll/delete",
