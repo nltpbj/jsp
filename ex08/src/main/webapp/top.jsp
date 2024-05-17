@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <div>
 	<hr>
-   <img src="/image/image.png" width="100%">
+   <img src="/image/ko.png" width="100%">
 </div>
