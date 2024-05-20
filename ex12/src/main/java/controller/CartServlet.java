@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,23 +15,35 @@ import com.google.gson.Gson;
 
 import model.*;
 
-@WebServlet(value={"/cart/insert", "/cart/list.json", "/cart/list", "/cart/update", "/cart/delete", "/favorite/insert", "/favorite/delete"})
+@WebServlet(value={"/cart/insert", "/cart/list.json", "/cart/list", "/cart/update", "/cart/delete", "/favorite/insert", "/favorite/delete", "/purchase/insert",
+		"/orders/insert", "/order/list", "/purchase/list.json", "/order/list.json"})
 public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CartDAO dao=new CartDAO();
+	OrderDAO odao=new OrderDAO();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		RequestDispatcher dis=request.getRequestDispatcher("/home.jsp");
+		Gson gson=new Gson();
 		
 		switch(request.getServletPath()) {
+		case "/order/list.json": //테스트 /order/list.json?pid=9fcc52d3-6631
+			out.print(gson.toJson(odao.olist(request.getParameter("pid"))));
+			break;
 		case "/cart/list.json": //테스트 /cart/list.json?uid=red
-			Gson gson=new Gson();
 			out.print(gson.toJson(dao.list(request.getParameter("uid"))));
 			break;
 		case "/cart/list":
 			request.setAttribute("pageName", "/goods/cart.jsp");
 			dis.forward(request, response);
+			break;
+		case "/order/list":
+			request.setAttribute("pageName", "/user/order.jsp");
+			dis.forward(request, response);
+			break;
+		case "/purchase/list.json": //테스트 /purchase/list.json?uid=red
+			out.print(gson.toJson(odao.list(request.getParameter("uid"))));
 			break;
 		}
 	}
@@ -39,6 +52,7 @@ public class CartServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		FavoriteDAO fdao=new FavoriteDAO();
+		OrderDAO odao=new OrderDAO();
 		switch(request.getServletPath()) {
 		case "/cart/insert":
 			CartVO vo=new CartVO();
@@ -68,6 +82,30 @@ public class CartServlet extends HttpServlet {
 			uid=request.getParameter("uid");
 			gid=request.getParameter("gid");
 			fdao.delete(uid, gid);
+			break;
+		case "/purchase/insert"://주문자정보등록
+			UUID uuid=UUID.randomUUID();
+			String pid=uuid.toString().substring(0,13);
+			PurchaseVO pvo=new PurchaseVO();
+			pvo.setPid(pid);
+			pvo.setUid(request.getParameter("uid"));
+			pvo.setUname(request.getParameter("rname"));
+			pvo.setPhone(request.getParameter("rphone"));
+			pvo.setAddress1(request.getParameter("raddress1"));
+			pvo.setAddress2(request.getParameter("raddress2"));
+			pvo.setSum(Integer.parseInt(request.getParameter("sum")));
+			System.out.println(pvo.toString());
+			odao.insert(pvo);
+			out.print(pid);
+			break;
+		case "/orders/insert"://주문상품등록
+			OrderVO ovo=new OrderVO();
+			ovo.setPid(request.getParameter("pid"));
+			ovo.setGid(request.getParameter("gid"));
+			ovo.setPrice(Integer.parseInt(request.getParameter("price")));
+			ovo.setQnt(Integer.parseInt(request.getParameter("qnt")));
+			System.out.println(ovo.toString());
+			odao.insert(ovo);
 			break;
 		}
 	}

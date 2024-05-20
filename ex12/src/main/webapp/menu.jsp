@@ -16,13 +16,19 @@
 					aria-current="page" href="/">Home</a></li>
 					
 				<li class="nav-item" id="cart-item"><a class="nav-link active"
-					aria-current="page" href="/cart/list">장바구니</a></li>	
+					aria-current="page" href="/cart/list">장바구니</a></li>
+				
+				<li class="nav-item" id="order-item"><a class="nav-link active"
+					aria-current="page" href="/order/list">주문목록</a></li>			
 					
 				<li class="nav-item" id="search-item"><a class="nav-link active"
 					aria-current="page" href="/goods/search">상품검색</a></li>
 					
 				<li class="nav-item" id="list-item"><a class="nav-link active"
 					aria-current="page" href="/goods/list">상품목록</a></li>
+				
+				<li class="nav-item" id="admin_order-item"><a class="nav-link active"
+					aria-current="page" href="/admin/order/list">주문관리</a></li>		
 			</ul>
 			<ul class="navbar-nav  mb-2 mb-lg-0">
 				<li class="nav-item" id="login"><a class="nav-link active"
@@ -42,11 +48,13 @@
 		$("#logout").show();
 		$("#cart-item").show();
 		$("#uid a").html(uid + "님");
+		$("#order-item").show();
 	}else{
 		$("#login").show();
 		$("#logout").hide();
 		$("#uid").hide();
 		$("#cart-item").hide();
+		$("#order-item").hide();
 	}
 	
 	$("#logout").on("click", "a", function(e){
@@ -61,8 +69,11 @@
 		$("#search-item").show();
 		$("#list-item").show();
 		$("#cart-item").hide();
+		$("#order-item").hide();
+		$("#admin_order-item").show();
 	}else{
 		$("#search-item").hide();
 		$("#list-item").hide();
+		$("#admin_order-item").hide();
 	}
 </script>

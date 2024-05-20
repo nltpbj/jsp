@@ -16,18 +16,32 @@ import com.google.gson.Gson;
 import model.*;
 
 
-@WebServlet(value={"/goods/list.json", "/goods/insert", "/goods/search", "/goods/search.json", "/goods/list", "/goods/delete", "/goods/total" ,"/goods/read"})
+@WebServlet(value={"/goods/list.json", "/goods/insert", "/goods/search", "/goods/search.json", "/goods/list", "/goods/delete", "/goods/total" ,"/goods/read"
+		, "/admin/order/list" , "/admin/order/list.json", "/admin/order/update" })
 public class GoodsServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        GoodsDAO dao=new GoodsDAO();
-       
+       OrderDAO odao=new  OrderDAO();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		HttpSession session = request.getSession();
-
+		Gson gson=new Gson();
+		
 		RequestDispatcher dis=request.getRequestDispatcher("/home.jsp");
 		switch(request.getServletPath()) {
+		case "/admin/order/list.json": //테스트 /admin/order/list.json?key=uid&word=red&page=1&size=3
+			QueryVO query=new QueryVO();
+			query.setKey(request.getParameter("key"));
+			query.setWord(request.getParameter("word"));
+			query.setPage(Integer.parseInt(request.getParameter("page")));
+			query.setSize(Integer.parseInt(request.getParameter("size")));
+			out.print(gson.toJson(odao.list(query)));
+			break;
+		case "/admin/order/list":
+			request.setAttribute("pageName", "/admin/orders.jsp");
+			dis.forward(request, response);
+			break;
 		case "/goods/read":
 			String uid=(String)session.getAttribute("uid");
 			request.setAttribute("goods", dao.read(request.getParameter("gid"), uid));
@@ -39,8 +53,7 @@ public class GoodsServelet extends HttpServlet {
 			out.print(dao.total(request.getParameter("word")));
 			break;
 		case "/goods/list.json": 
-			Gson gson=new Gson();
-			QueryVO query=new QueryVO();
+			query=new QueryVO();
 			uid=request.getParameter("uid");
 			query.setWord(request.getParameter("word"));
 			query.setPage(Integer.parseInt(request.getParameter("page")));
@@ -82,6 +95,11 @@ public class GoodsServelet extends HttpServlet {
 		case "/goods/delete":
 			String gid=request.getParameter("gid");
 			out.print(dao.delete(gid));
+			break;
+		case "/admin/order/update":
+			String pid=request.getParameter("pid");
+			int status=Integer.parseInt(request.getParameter("status"));
+			odao.update(pid, status);
 			break;
 				
 		}

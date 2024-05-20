@@ -51,6 +51,7 @@ public class UserServlet extends HttpServlet {
 			if(vo.getUid()!=null) {
 				if(vo.getUpass().equals(upass)) {
 				    session.setAttribute("uid", uid);
+				    session.setAttribute("user", vo);
 					result=1; //로그인 성공
 				}else {
 					result=2;  //비밀번호 불일치

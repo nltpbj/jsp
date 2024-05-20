@@ -8,7 +8,7 @@
  
  </style>   
     
-<div class="row my-5 justify-content-center my-5" id="login">
+<div class="row my-5 justify-content-center" id="login">
     <div class="col-6 col-md-4">
         <div class="card">
             <div class="card-header text-center">

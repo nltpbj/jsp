@@ -9,13 +9,19 @@ public class DBtest {
 			
 		//CartDAO dao=new CartDAO();
 		//dao.list("blue");
-		GoodsDAO dao=new GoodsDAO();
+		//GoodsDAO dao=new GoodsDAO();
+		OrderDAO dao=new OrderDAO();
 		QueryVO vo=new QueryVO();
-		vo.setKey("gid");
-		vo.setWord("");
+		vo.setKey("uid");
+		vo.setWord("red");
 		vo.setPage(1);
 		vo.setSize(3);
-		dao.list(vo, "red");
+		dao.list(vo);
+		//vo.setKey("gid");
+//		vo.setWord("");
+//		vo.setPage(1);
+//		vo.setSize(3);
+//		dao.list(vo, "red");
 	}
 
 }
